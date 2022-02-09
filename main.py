@@ -1,5 +1,12 @@
 import requests, json, sys
 
+# TODO
+# - implement url editing features in settings function(ex. choosing categories, difficulties, question types, etc.)
+# - figure out how to display possible answers in a random order
+# - fix weird string parsing issue (some characters aren't printing correctly)
+# - implement into discord bot and/or website (website will need a gui)
+
+
 def start():
 
     # Getting data from Open Trivia DataBase using their API url
