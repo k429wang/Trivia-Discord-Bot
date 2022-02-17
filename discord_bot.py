@@ -1,8 +1,10 @@
 import random, requests, sys, discord
 
 # TODO
-# - fix weird string parsing issue (some characters aren't printing correctly)
-# - implement into discord bot and/or website (website will need a gui)
+# - implement answer detection (use same message detection function or make new one or implement into a def function)
+# - timer for answers
+# - permanent stats for users
+# - find a server to run the bot in the cloud 24/7?
 
 token = open('token.txt', 'r')
 TOKEN = token.read()
@@ -43,7 +45,7 @@ async def on_message(message):
         return
 
     match user_message:
-        case '..tryhard check':
+        case '$tryhard check':
             x = random.randint(0,3)
             user = random.choice(user_list)
             match x:
@@ -56,16 +58,16 @@ async def on_message(message):
                 case 3:
                     await message.channel.send(user + " never tryhards")
             return
-        case '..help':
+        case '$help':
             await message.channel.send('''
 This is a Trivia bot made by Kai Wang using the OpenTrivia database. Available commands:
-    ..start -> Begin playing
-    ..settings -> Change the game settings
-    ..quit -> Stop the current game
-    ..tryhard check -> ;)
+    $start -> Begin playing
+    $settings -> Change the game settings
+    $quit -> Stop the current game
+    $tryhard check -> ;)
 ''')
             return
-        case '..start':
+        case '$start':
             update_url()
 
             response = requests.get(url)

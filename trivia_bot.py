@@ -4,7 +4,6 @@ import random, requests, sys
 # - fix weird string parsing issue (some characters aren't printing correctly)
 # - implement into discord bot and/or website (website will need a gui)
 # - fix issue where there isn't enough questions so the API just returns empty json file
-# - put discord token into a txt file that can be imported, and then add that file to the git ignore
 
 url = 'https://opentdb.com/api.php?amount=10'
 amount = 10
