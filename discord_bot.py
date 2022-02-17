@@ -1,10 +1,24 @@
-import random, requests, sys
+import random
+import requests, sys, discord
 
 # TODO
 # - fix weird string parsing issue (some characters aren't printing correctly)
 # - implement into discord bot and/or website (website will need a gui)
-# - fix issue where there isn't enough questions so the API just returns empty json file
-# - put discord token into a txt file that can be imported, and then add that file to the git ignore
+
+token = open('token.txt', 'r')
+TOKEN = token.read()
+
+client = discord.Client()
+
+@client.event
+async def on_ready():
+    print('Logged in with {0.user}'.format(client))
+
+@client.event
+async def on_message(message):
+    if message.content.startswith('!tbot'):
+        await message.channel.send("Alex is a tryhard!!")
+        
 
 url = 'https://opentdb.com/api.php?amount=10'
 amount = 10
@@ -32,10 +46,7 @@ def start():
 
     results = trivia['results']
 
-    counter = 0
-
-    for x in range(int(amount)):
-
+    for x in range(amount):
         question = results[x]
 
         print(question['question'])
@@ -44,45 +55,23 @@ def start():
             answers = question['incorrect_answers']
             answers.append(question['correct_answer'])
             random.shuffle(answers)
-            answers_dic = {
-                'A': answers[0],
-                'B': answers[1],
-                'C': answers[2],
-                'D': answers[3]
-                }
-
             print('A: ' + answers[0])
             print('B: ' + answers[1])
             print('C: ' + answers[2])
             print('D: ' + answers[3])
-
-            x = input()
-
-            if (x.capitalize() in answers_dic)and(answers_dic[x.capitalize()] == question['correct_answer']):
-                counter += 1
-                print('CORRECT!')
-            elif(x == 'quit'):
-                quit()
-            else:
-                counter = 0
-                print('INCORRECT. The correct answer is: ' + question['correct_answer'])
-
         elif(question['type'] == 'boolean'):
             print('True OR False?')
 
-            x = input()
+        x = input()
 
-            if (x.capitalize() == question['correct_answer']):
-                counter += 1
-                print('CORRECT!')
-            elif(x == 'quit'):
-                quit()
-            else:
-                counter = 0
-                print('INCORRECT. The correct answer is: ' + question['correct_answer'])
+        if (x == question['correct_answer']):
+            print('Correct!')
+        elif(x == 'quit'):
+            quit()
+        else:
+            print('Incorrect. The correct answer is: ' + question['correct_answer'])
 
-        if (counter != 0):
-            print("Streak: " + str(counter))
+
 
 def settings():
     global amount, category, difficulty, qtype
@@ -135,7 +124,11 @@ boolean - True or False
                 qtype = input()
             case 'done':
                 update_url()
+                print(url)
                 break
+
+
+
 
 def quit():
     print("Thank you for playing!")
@@ -161,3 +154,5 @@ def run():
     
 if __name__ == '__main__':
     run()
+
+client.run(TOKEN)
