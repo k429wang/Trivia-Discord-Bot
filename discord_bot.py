@@ -1,35 +1,23 @@
-import random, requests, asyncio, discord, time
+import random, requests, asyncio, discord
 
 # TODO
 # - fix json parsing issue
 # - permanent stats for users
 # - add answer streak feature
 # - find a server to run the bot in the cloud 24/7?
-# - add comments and make code prettier (get rid of excess variables, make code more organized)
 # - implement 'settings' feature
 
+#Initialize client side discord API using TOKEN
 token = open('token.txt', 'r')
 TOKEN = token.read()
-
 client = discord.Client()
 
-url = 'https://opentdb.com/api.php?amount=10'
-amount = 10
-category = 0
-difficulty = 0 
-qtype = 0
-answering_state = False
-counter = 0
-user_list = []
-question = ''
-answers_dic = {}
-players_dic = {}
-correct_players = []
-
+#Updates the trivia database API call
 def update_url():
     global url
     url = 'https://opentdb.com/api.php?amount=' + str(amount) + '&category=' + str(category) + '&difficulty=' + str(difficulty) + '&type=' + str(qtype)
 
+#Called by '$start' command -> starts printing questions to the console
 async def print_question(message):
     global answering_state, url, counter, question, correct_players
 
@@ -92,11 +80,12 @@ Congratulations:
     await message.channel.send('Game over! Thanks for playing.')
     answering_state = False
 
-
+#Prints a message when the bot is connected
 @client.event
 async def on_ready():
     print('Logged in with {0.user}'.format(client))
 
+#Triggers when a message is sent in the discord server
 @client.event
 async def on_message(message):
     global counter, answering_state, question, answers_dic, players_dic
@@ -114,6 +103,7 @@ async def on_message(message):
     if ((username in user_list)==False):
         user_list.append(username)
 
+    #Respond to commands in discord server
     match user_message:
         case '$tryhard check':
             x = random.randint(0,3)
@@ -148,7 +138,19 @@ This is a Trivia bot made by Kai Wang using the OpenTrivia database. Available c
             if (answering_state == True):
                 players_dic[username] = user_message
                 
-
-    
+#Main function to declare variables and run discord client
 if __name__ == '__main__':
+    url = 'https://opentdb.com/api.php?amount=10'
+    amount = 10
+    category = 0
+    difficulty = 0 
+    qtype = 0
+    answering_state = False
+    counter = 0
+    user_list = []
+    question = ''
+    answers_dic = {}
+    players_dic = {}
+    correct_players = []
+
     client.run(TOKEN)

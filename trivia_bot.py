@@ -2,19 +2,14 @@ import random, requests, sys
 
 # TODO
 # - fix weird string parsing issue (some characters aren't printing correctly)
-# - implement into discord bot and/or website (website will need a gui)
 # - fix issue where there isn't enough questions so the API just returns empty json file
 
-url = 'https://opentdb.com/api.php?amount=10'
-amount = 10
-category = 0
-difficulty = 0 
-qtype = 0
-
+#Updates the trivia database API call
 def update_url():
     global url
     url = 'https://opentdb.com/api.php?amount=' + str(amount) + '&category=' + str(category) + '&difficulty=' + str(difficulty) + '&type=' + str(qtype)
 
+#Called by 'start' command -> starts printing questions to the console
 def start():
 
     # Getting data from Open Trivia DataBase using their API url
@@ -33,6 +28,7 @@ def start():
 
     counter = 0
 
+    #Loop through trivia JSON file to print questions
     for x in range(int(amount)):
 
         question = results[x]
@@ -83,8 +79,11 @@ def start():
         if (counter != 0):
             print("Streak: " + str(counter))
 
+#Called by 'settings' command -> starts printing settings commands to the console
 def settings():
     global amount, category, difficulty, qtype
+
+    #Event loop -> Loop through settings commands until user inputs 'done'
     while (True):
         print('What would you like to change? (Options: amount, category, difficulty, type, OR done)')
         x = input()
@@ -136,15 +135,18 @@ boolean - True or False
                 update_url()
                 break
 
+#Called by 'quit' command -> exits the program
 def quit():
     print("Thank you for playing!")
     sys.exit(0)
 
+#Runs on launch, initializes game and gives user instructions
 def run():
     update_url()
 
     print("This is a Trivia bot made by Kai Wang using the OpenTrivia database.")
 
+    #Event loop -> Loops through game commands until user inputs 'quit'
     while (True):
         print("Enter 'start' to begin playing, 'settings' to access settings, and 'quit' to terminate the program.")
         x = input()
@@ -158,5 +160,13 @@ def run():
             case _:
                 print("Please enter a valid input.")
     
+#Main function to declare variables and start the game
 if __name__ == '__main__':
+    #Declare global URL variables
+    url = 'https://opentdb.com/api.php?amount=10'
+    amount = 10
+    category = 0
+    difficulty = 0 
+    qtype = 0
+
     run()
