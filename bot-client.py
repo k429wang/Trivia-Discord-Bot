@@ -23,6 +23,7 @@ async def print_question(message):
 
     update_url()
 
+    # Getting data from Open Trivia DataBase using their API url
     response = requests.get(url)
     trivia = response.json()
     results = trivia['results']
@@ -32,11 +33,13 @@ async def print_question(message):
 
             question = results[x]
 
+            #Sends the question into the channel as a message
             await message.channel.send(f'''
 ----------------------------------------
 {question['question']}
 ''')
 
+            #Sends multiple choice options into the channel as a message
             if (question['type'] == 'multiple'):
                 answers = question['incorrect_answers']
                 answers.append(question['correct_answer'])
@@ -63,6 +66,7 @@ D: {answers[3]}
 Congratulations: 
 {correct_players}
 ''')
+            #Sends true or false query into the channel as a message
             elif(question['type'] == 'boolean'):
                 await message.channel.send('True OR False?')
                 await asyncio.sleep(10)
