@@ -160,6 +160,9 @@ def run():
             case _:
                 print("Please enter a valid input.")
     
+def main():
+    run()
+
 #Main function to declare variables and start the game
 if __name__ == '__main__':
     #Declare global URL variables
@@ -169,4 +172,4 @@ if __name__ == '__main__':
     difficulty = 0 
     qtype = 0
 
-    run()
+    main()

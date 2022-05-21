@@ -142,6 +142,9 @@ This is a Trivia bot made by Kai Wang using the OpenTrivia database. Available c
             if (answering_state == True):
                 players_dic[username] = user_message
                 
+def main():
+    client.run(TOKEN)
+
 #Main function to declare variables and run discord client
 if __name__ == '__main__':
     url = 'https://opentdb.com/api.php?amount=10'
@@ -157,4 +160,4 @@ if __name__ == '__main__':
     players_dic = {}
     correct_players = []
 
-    client.run(TOKEN)
+    main()
