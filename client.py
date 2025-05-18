@@ -7,17 +7,17 @@ import random, requests, asyncio, discord
 # - find a server to run the bot in the cloud 24/7?
 # - implement 'settings' feature
 
-#Initialize client side discord API using TOKEN
+# Initialize client side discord API using TOKEN
 token = open('token.txt', 'r')
 TOKEN = token.read()
 client = discord.Client()
 
-#Updates the trivia database API call
+# Updates the trivia database API call
 def update_url():
     global url
     url = 'https://opentdb.com/api.php?amount=' + str(amount) + '&category=' + str(category) + '&difficulty=' + str(difficulty) + '&type=' + str(qtype)
 
-#Called by '$start' command -> starts printing questions to the console
+# Called by '$start' command -> starts printing questions to the console
 async def print_question(message):
     global answering_state, url, counter, question, correct_players
 
@@ -33,13 +33,13 @@ async def print_question(message):
 
             question = results[x]
 
-            #Sends the question into the channel as a message
+            # Sends the question into the channel as a message
             await message.channel.send(f'''
 ----------------------------------------
 {question['question']}
 ''')
 
-            #Sends multiple choice options into the channel as a message
+            # Sends multiple choice options into the channel as a message
             if (question['type'] == 'multiple'):
                 answers = question['incorrect_answers']
                 answers.append(question['correct_answer'])
@@ -66,7 +66,7 @@ D: {answers[3]}
 Congratulations: 
 {correct_players}
 ''')
-            #Sends true or false query into the channel as a message
+            # Sends true or false query into the channel as a message
             elif(question['type'] == 'boolean'):
                 await message.channel.send('True OR False?')
                 await asyncio.sleep(10)
@@ -84,30 +84,30 @@ Congratulations:
     await message.channel.send('Game over! Thanks for playing.')
     answering_state = False
 
-#Prints a message when the bot is connected
+# Prints a message when the bot is connected
 @client.event
 async def on_ready():
     print('Logged in with {0.user}'.format(client))
 
-#Triggers when a message is sent in the discord server
+# Triggers when a message is sent in the discord server
 @client.event
 async def on_message(message):
     global counter, answering_state, question, answers_dic, players_dic
 
-    #Keep track of all the messages in the bot channel
+    # Keep track of all the messages in the bot channel
     username = str(message.author).split('#')[0]
     user_message = str(message.content)
     print(f'{username}: {user_message}')
 
-    #Make sure bot does not interact with itself
+    # Make sure bot does not interact with itself
     if message.author == client.user:
         return
 
-    #Add new users to user list & make sure the bot is not in the list
+    # Add new users to user list & make sure the bot is not in the list
     if ((username in user_list)==False):
         user_list.append(username)
 
-    #Respond to commands in discord server
+    # Respond to commands in discord server
     match user_message:
         case '$tryhard check':
             x = random.randint(0,3)
@@ -145,7 +145,7 @@ This is a Trivia bot made by Kai Wang using the OpenTrivia database. Available c
 def main():
     client.run(TOKEN)
 
-#Main function to declare variables and run discord client
+# Main function to declare variables and run discord client
 if __name__ == '__main__':
     url = 'https://opentdb.com/api.php?amount=10'
     amount = 10

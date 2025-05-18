@@ -4,12 +4,12 @@ import random, requests, sys
 # - fix weird string parsing issue (some characters aren't printing correctly)
 # - fix issue where there isn't enough questions so the API just returns empty json file
 
-#Updates the trivia database API call
+# Updates the trivia database API call
 def update_url():
     global url
     url = 'https://opentdb.com/api.php?amount=' + str(amount) + '&category=' + str(category) + '&difficulty=' + str(difficulty) + '&type=' + str(qtype)
 
-#Called by 'start' command -> starts printing questions to the console
+# Called by 'start' command -> starts printing questions to the console
 def start():
 
     # Getting data from Open Trivia DataBase using their API url
@@ -20,7 +20,7 @@ def start():
     # with open ("data.json", "w") as write_file:
     #     json.dump(trivia, write_file)
 
-    #Opening a JSON file for testing purposes
+    # Opening a JSON file for testing purposes
     # with open ("data.json", "r") as read_file:
     #     trivia = json.load(read_file)
 
@@ -28,7 +28,7 @@ def start():
 
     counter = 0
 
-    #Loop through trivia JSON file to print questions
+    # Loop through trivia JSON file to print questions
     for x in range(int(amount)):
 
         question = results[x]
@@ -79,11 +79,11 @@ def start():
         if (counter != 0):
             print("Streak: " + str(counter))
 
-#Called by 'settings' command -> starts printing settings commands to the console
+# Called by 'settings' command -> starts printing settings commands to the console
 def settings():
     global amount, category, difficulty, qtype
 
-    #Event loop -> Loop through settings commands until user inputs 'done'
+    # Event loop -> Loop through settings commands until user inputs 'done'
     while (True):
         print('What would you like to change? (Options: amount, category, difficulty, type, OR done)')
         x = input()
@@ -135,12 +135,12 @@ boolean - True or False
                 update_url()
                 break
 
-#Called by 'quit' command -> exits the program
+# Called by 'quit' command -> exits the program
 def quit():
     print("Thank you for playing!")
     sys.exit(0)
 
-#Runs on launch, initializes game and gives user instructions
+# Runs on launch, initializes game and gives user instructions
 def run():
     update_url()
 
@@ -163,9 +163,9 @@ def run():
 def main():
     run()
 
-#Main function to declare variables and start the game
+# Main function to declare variables and start the game
 if __name__ == '__main__':
-    #Declare global URL variables
+    # Declare global URL variables
     url = 'https://opentdb.com/api.php?amount=10'
     amount = 10
     category = 0
