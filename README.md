@@ -1,8 +1,6 @@
 # Trivia Discord Bot
 
-This is a trivia discord bot created by Kai Wang in Python using the Open Trivia Data Base and official Discord APIs.
+A trivia discord bot created in Python using the Open Trivia Data Base and official Discord API.
 
-There are two files in this repo:
-
-- `main.py` -> Python executable, run to start playing directly in your command line
-- `bot-client.py` -> Source code for the discord bot version of the trivia application
+- `main.py` -> Run to start playing directly in the command line
+- `client.py` -> Integration with Discord API to play via a Discord bot
